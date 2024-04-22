@@ -57,6 +57,12 @@ const TextForm = (props) => {
     }
   };
 
+  const handleCopyEmail = (email) => {
+    navigator.clipboard.writeText(email);
+    props.showAlert("Email copied to Clipboard!", "success");
+  };
+
+
   const handleExtraSpace = () => {
     let newText = text.split(/[ ]+/);
     setText(newText.join(" "));
@@ -164,11 +170,16 @@ const TextForm = (props) => {
         </button>
       </div>
       {emails.length > 0 && (
-        <div className="container">
+        <div
+          className="container"
+          style={{ color: props.mode === "dark" ? "white" : "black" }}
+        >
           <h2>Extracted Emails</h2>
           <ul>
             {emails.map((email, index) => (
-              <li key={index}>{email}</li>
+              <li key={index} onClick={() => handleCopyEmail(email)} style={{ cursor: "pointer" }}>
+                {email}
+              </li>
             ))}
           </ul>
         </div>
